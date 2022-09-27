@@ -5,13 +5,17 @@
     <h2>Busquedas</h2>
     <hr>
     <ul class="list-group">
-      <li [routerLink]="['/porpais']" class="list-group-item">Por Pais</li>
-      <li [routerLink]="['/porcapital']" class="list-group-item">Por Capital</li>
-      <li [routerLink]="['/porregion']" class="list-group-item">Por Región</li>
+      <li [routerLink]="['/pais']"
+          routerLinkActive="active"
+          class="list-group-item">Por Pais</li>
+      <li [routerLink]="['/capital']"
+          routerLinkActive="active" 
+          class="list-group-item">Por Capital</li>
+      <li [routerLink]="['/region']"
+          routerLinkActive="active"
+          class="list-group-item">Por Región</li>
     </ul>
   </div>
-
-
 
   <div class="col">
     <router-outlet></router-outlet>
