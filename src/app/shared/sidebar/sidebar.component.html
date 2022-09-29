@@ -1,1 +1,13 @@
-<p>sidebar works!</p>
+<h2>Busquedas</h2>
+<hr>
+<ul class="list-group">
+  <li [routerLink]="['/pais']"
+      routerLinkActive="active"
+      class="list-group-item">Por Pais</li>
+  <li [routerLink]="['/capital']"
+      routerLinkActive="active" 
+      class="list-group-item">Por Capital</li>
+  <li [routerLink]="['/region']"
+      routerLinkActive="active"
+      class="list-group-item">Por Región</li>
+</ul>
