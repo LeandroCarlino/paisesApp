@@ -3,10 +3,11 @@
 
 <div class="row">
   <div class="col">
-    <form autocomplete="off">
+    <form autocomplete="off" (ngSubmit)="buscar()">
       <input
         type="text"
         name="termino"
+        [(ngModel)]="termino"
         class="form-control"
         placeholder="Buscar país..."
       />
@@ -14,36 +15,39 @@
   </div>
 </div>
 
-<hr>
-
-<div class="alert alert-danger">
-    No se encontro nada con el termino #####
-</div>
+<hr />
 
 <div class="row">
-    <div class="col">
-        <table class="table table-power">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Bandera</th>
-                    <th>Nombre</th>
-                    <th>Población</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>bandera</td>
-                    <td>nombre</td>
-                    <td>132121321</td>
-                    <td>
-                        <a href="/pais/:id">Ver...</a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+  <div class="col">
+    <table class="table table-power" *ngIf="!hayError else notFound">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Bandera</th>
+          <th>Nombre</th>
+          <th>Población</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let pais of data; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>
+            <img [src]="pais.flag" [alt]="pais.name" style="width: 100px" />
+          </td>
+          <td>{{ pais.name }}</td>
+          <td>{{ pais.population }}</td>
+          <td>
+            <a [routerLink]="['/pais', pais.alpha2Code]">Ver...</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
 
-    </div>
+    <ng-template #notFound >
+        <div class="alert alert-danger">
+          No se encontro nada con el termino {{ termino }}
+        </div>
+      </ng-template>
+  </div>
 </div>
