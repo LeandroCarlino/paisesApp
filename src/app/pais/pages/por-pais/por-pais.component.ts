@@ -9,16 +9,17 @@ import { PaisService } from '../../services/pais.service';
 })
 export class PorPaisComponent {
   termino!: string;
-  data!: Pais[];
+  paises!: Pais[];
   hayError: boolean = false;
   constructor(private paisService: PaisService) {}
 
-  buscar() {
+  buscar(termino: string) {
     this.hayError = false;
-    this.data = [];
+    this.paises = [];
+    this.termino = termino;
     this.paisService.searchByCountry(this.termino).subscribe({
       next: (data) => {
-        this.data = data;
+        this.paises = data;
       },
       error: () => {
         this.hayError = true;
