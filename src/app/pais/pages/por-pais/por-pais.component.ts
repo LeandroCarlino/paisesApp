@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Pais } from '../../interfaces/porPais.interface';
+import { Country } from '../../interfaces/porPais.interface';
 import { PaisService } from '../../services/pais.service';
 
 @Component({
@@ -8,22 +8,27 @@ import { PaisService } from '../../services/pais.service';
   styleUrls: ['./por-pais.component.css'],
 })
 export class PorPaisComponent {
-  termino!: string;
-  paises!: Pais[];
+  query!: string;
+  countries!: Country[];
   hayError: boolean = false;
   constructor(private paisService: PaisService) {}
 
-  buscar(termino: string) {
+  search(query: string) {
     this.hayError = false;
-    this.paises = [];
-    this.termino = termino;
-    this.paisService.searchByCountry(this.termino).subscribe({
+    this.countries = [];
+    this.query = query;
+    this.paisService.searchByCountry(this.query).subscribe({
       next: (data) => {
-        this.paises = data;
+        this.countries = data;
       },
       error: () => {
         this.hayError = true;
       },
     });
+  }
+
+  suggestion(termino: string) {
+    this.hayError = false;
+    
   }
 }

@@ -12,9 +12,10 @@ export class PorCapitalComponent {
   hayError: boolean = false;
   constructor(private paisService: PaisService) {}
 
-  buscar() {
+  search(termino: string) {
     this.hayError = false;
     this.data = [];
+    this.termino = termino;
     this.paisService.searchByCapital(this.termino).subscribe({
       next: (data) => {
         this.data = data;
@@ -25,4 +26,7 @@ export class PorCapitalComponent {
     });
   }
 
+  suggestion(termino: string) {
+    this.hayError = false;
+  }
 }

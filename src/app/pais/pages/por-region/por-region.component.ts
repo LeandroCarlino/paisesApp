@@ -7,21 +7,26 @@ import { PaisService } from '../../services/pais.service';
   styleUrls: ['./por-region.component.css']
 })
 export class PorRegionComponent {
-  termino!: string;
-  data!: any[];
+  query!: string;
+  countries!: any[];
   hayError: boolean = false;
   constructor(private paisService: PaisService) {}
 
-  buscar() {
+  search(query: string) {
     this.hayError = false;
-    this.data = [];
-    this.paisService.searchByRegion(this.termino).subscribe({
-      next: (data) => {
-        this.data = data;
+    this.countries = [];
+    this.query = query;
+    this.paisService.searchByRegion(this.query).subscribe({
+      next: (countries) => {
+        this.countries = countries;
       },
       error: () => {
         this.hayError = true;
       },
     });
+  }
+
+  suggestion(termino: string) {
+    this.hayError = false;
   }
 }

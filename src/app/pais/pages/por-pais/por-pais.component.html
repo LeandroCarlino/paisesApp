@@ -1,23 +1,20 @@
 <h2>Por País</h2>
 <hr />
-
 <div class="row">
   <div class="col">
-    <app-pais-input (onEnter)="buscar($event)"></app-pais-input>
+    <app-pais-input (onEnter)="search($event)" (onDebounce)="suggestion($event)"></app-pais-input>
   </div>
 </div>
-
 <hr />
-
 <div class="row">
   <div class="col">
     <app-pais-tabla
       *ngIf="!hayError; else notFound"
-      [paises]="paises"
+      [countries]="countries" 
     ></app-pais-tabla>
     <ng-template #notFound>
       <div class="alert alert-danger">
-        No se encontro nada con el termino {{ termino }}
+        No se encontro nada con el termino {{ query }}
       </div>
     </ng-template>
   </div>

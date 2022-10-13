@@ -1,27 +1,28 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Pais } from '../interfaces/porPais.interface';
+import { Country } from '../interfaces/porPais.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PaisService {
-  apiByCountry: string = 'https://restcountries.com/v2/name/'
-  apiByCapital: string = 'https://restcountries.com/v3.1/capital/'
-  apiByRegion: string = 'https://restcountries.com/v3.1/region/'
+  apiUrl: string = 'https://restcountries.com/v3.1'
 
   constructor(private http: HttpClient) { }
 
-  searchByCountry(query: string): Observable<Pais[]> {
-    return this.http.get<Pais[]>(this.apiByCountry + query)
+  searchByCountry(query: string): Observable<Country[]> {
+    const url = `${ this.apiUrl }/name/${ query }`
+    return this.http.get<Country[]>( url )
   }
 
-  searchByCapital(query: string): Observable<any[]> {
-    return this.http.get<any[]>(this.apiByCapital + query)
+  searchByCapital(query: string): Observable<Country[]> {
+    const url = `${ this.apiUrl }/capital/${ query }`
+    return this.http.get<Country[]>( url )
   }
 
-  searchByRegion(query: string): Observable<any[]> {
-    return this.http.get<any[]>(this.apiByRegion + query)
+  searchByRegion(query: string): Observable<Country[]> {
+    const url = `${ this.apiUrl }/region/${ query }`
+    return this.http.get<Country[]>( url )
   }
 }

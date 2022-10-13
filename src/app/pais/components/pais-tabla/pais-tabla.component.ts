@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Pais } from '../../interfaces/porPais.interface';
+import { Country } from '../../interfaces/porPais.interface';
 
 @Component({
   selector: 'app-pais-tabla',
@@ -7,5 +7,5 @@ import { Pais } from '../../interfaces/porPais.interface';
   styleUrls: ['./pais-tabla.component.css']
 })
 export class PaisTablaComponent {
-  @Input() paises: Pais[] = []
+  @Input() countries: Country[] = []
 }
