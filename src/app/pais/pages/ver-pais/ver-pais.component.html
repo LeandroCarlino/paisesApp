@@ -1,1 +1,48 @@
-<h2>Ver país</h2>
+<div class="alert aler-info" *ngIf="!country; else divPais">
+  <p>Espere por favor...</p>
+</div>
+
+<ng-template #divPais>
+  <div class="row mb-2">
+    <div class="col-12">
+      <h1>
+        Pais: <small>{{ country.name.common }}</small>
+      </h1>
+    </div>
+  </div>
+
+  <div class="row mb-4">
+    <h3>Bandera</h3>
+    <img
+      [src]="country.flags.svg"
+      [alt]="country.name.common"
+      class="img-thumbnail"
+      style="width: 300px"
+    />
+  </div>
+
+  <div class="col">
+    <div class="mb-4">
+      <h3 class="mb-2">Información</h3>
+      <ul class="list-group">
+        <li class="list-group-item">
+          <strong>Continente:</strong> {{ country.region }}
+        </li>
+        <li class="list-group-item">
+          <strong>Capital:</strong> {{ country.capital }}
+        </li>
+        <li class="list-group-item">
+          <strong>Población:</strong> {{ country.population | number }}
+        </li>
+      </ul>
+    </div>
+
+    <div
+      class="mb-4"
+      style="background-color: rgb(41, 40, 40); color: whitesmoke; padding: 1em"
+    >
+      <h3 class="mb-2">Json completo:</h3>
+      <pre>{{ country | json }}</pre>
+    </div>
+  </div>
+</ng-template>

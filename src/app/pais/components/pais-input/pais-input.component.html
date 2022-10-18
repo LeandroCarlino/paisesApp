@@ -1,10 +1,10 @@
-<form autocomplete="off" (ngSubmit)="buscar()">
+<form autocomplete="off" (ngSubmit)="search()">
   <input
     type="text"
     name="termino"
-    [(ngModel)]="termino"
+    [(ngModel)]="query"
     class="form-control"
     (input)="pressKey()"
-    placeholder="Buscar país..."
+    [placeholder]="placeholder"
   />
 </form>

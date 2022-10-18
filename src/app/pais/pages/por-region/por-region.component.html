@@ -1,15 +1,16 @@
-<h2>Por País</h2>
+<h2>Por Región</h2>
 <hr />
 <div class="row">
   <div class="col">
     <app-pais-input
       (onEnter)="search($event)"
       (onDebounce)="suggestion($event)"
+      placeholder="Buscar país por región..."
     ></app-pais-input>
   </div>
 </div>
 <hr />
-<div class="row"> 
+<div class="row">
   <div class="col">
     <app-pais-tabla
       *ngIf="!hayError; else notFound"

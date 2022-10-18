@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { debounceTime, Subject } from 'rxjs';
 
 @Component({
@@ -7,7 +7,8 @@ import { debounceTime, Subject } from 'rxjs';
   styleUrls: ['./pais-input.component.css'],
 })
 export class PaisInputComponent implements OnInit {
-  termino: string = '';
+  query: string = '';
+  @Input() placeholder: string = ''
   @Output() onEnter: EventEmitter<string> = new EventEmitter();
   @Output() onDebounce: EventEmitter<string> = new EventEmitter();
   debouncer: Subject<string> = new Subject();
@@ -18,11 +19,11 @@ export class PaisInputComponent implements OnInit {
     })  
   }
 
-  buscar() {
-    this.onEnter.emit(this.termino)
+  search(): void {
+    this.onEnter.emit(this.query)
   }
 
-  pressKey() {
-    this.debouncer.next(this.termino)
+  pressKey(): void {
+    this.debouncer.next(this.query)
   }
 }

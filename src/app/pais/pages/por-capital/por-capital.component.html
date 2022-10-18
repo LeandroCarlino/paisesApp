@@ -1,10 +1,11 @@
-<h2>Por País</h2>
+<h2>Por Capital</h2>
 <hr />
 <div class="row">
   <div class="col">
     <app-pais-input
       (onEnter)="search($event)"
       (onDebounce)="suggestion($event)"
+      placeholder="Buscar país por capital..."
     ></app-pais-input>
   </div>
 </div>
