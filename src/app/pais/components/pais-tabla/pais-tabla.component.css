@@ -1,3 +1,7 @@
+.main-table {
+  min-height: 65vh;
+}
+
 .country-img {
   width: 100px;
 }
