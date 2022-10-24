@@ -7,3 +7,7 @@
 body {
   background-color: rgb(231, 228, 228);
 }
+
+.pais-tabla {
+  min-height: 65vh;
+}

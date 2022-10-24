@@ -7,11 +7,11 @@
       (onDebounce)="suggestion($event)"
       placeholder="Buscar país..."
     ></app-pais-input>
-    <p>{{ query }}</p>
+    <p class="badge text-bg-info m-2 mt-4">{{ query }}</p>
   </div>
 </div>
 <hr />
-<div class="row">
+<div class="row" class="pais-tabla">
   <div class="col">
     <app-pais-tabla
       *ngIf="!hayError; else notFound"

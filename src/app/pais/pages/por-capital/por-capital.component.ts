@@ -4,19 +4,19 @@ import { PaisService } from '../../services/pais.service';
 @Component({
   selector: 'app-por-capital',
   templateUrl: './por-capital.component.html',
-  styleUrls: ['./por-capital.component.css']
+  styleUrls: ['./por-capital.component.css'],
 })
 export class PorCapitalComponent {
-  termino!: string;
+  query!: string;
   data!: any[];
   hayError: boolean = false;
   constructor(private paisService: PaisService) {}
 
-  search(termino: string) {
+  search(query: string) {
     this.hayError = false;
     this.data = [];
-    this.termino = termino;
-    this.paisService.searchByCapital(this.termino).subscribe({
+    this.query = query;
+    this.paisService.searchByCapital(this.query).subscribe({
       next: (data) => {
         this.data = data;
       },
@@ -26,7 +26,7 @@ export class PorCapitalComponent {
     });
   }
 
-  suggestion(termino: string) {
+  suggestion(query: string) {
     this.hayError = false;
   }
 }
