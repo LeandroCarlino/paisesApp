@@ -1,27 +1,70 @@
-# PaisesApp
+# Países
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.2.
+Buscador de países por **nombre**, **capital** o **región**, con población, superficie, densidad, idiomas, moneda y países limítrofes.
 
-## Development server
+**Demo:** https://leandrocarlino.github.io/paisesApp/
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Reescrito en **Angular 22** con standalone components y signals. Los datos viajan en un JSON local, así que **no depende de ninguna API externa ni de una API key**.
 
-## Code scaffolding
+## Por qué
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+La versión original (Angular 13, 2022) consultaba `restcountries.com/v3.1`, que **fue apagada**: la API responde `"This API version has been deprecated"` y la v5 exige registrarse y una API key que, en una app de navegador, queda expuesta. Hoy la app original no muestra ningún país.
 
-## Build
+## Qué cambió
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+| | Antes | Ahora |
+|---|---|---|
+| Framework | Angular 13 (sin soporte) | **Angular 22** (standalone + signals) |
+| Datos | API v3.1 caída | **JSON local de 70 KB** + banderas de flagcdn |
+| Arquitectura | 3 páginas casi idénticas + `suggestion()` vacío | una página de búsqueda con `data.modo` y un detalle |
+| Estado | `subscribe` anidados sin desuscribir | `httpResource` + `computed` |
+| Búsqueda | solo con `Enter` | inmediata, **sin acentos** y también en inglés |
+| Rendimiento | todo en un bundle | **lazy loading** por ruta (3 y 2 KB) |
+| Tests | specs por defecto sin valor | **11 tests** de filtrado y shell |
 
-## Running unit tests
+## Características
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+- **Búsqueda tolerante**: `aleman` encuentra Alemania y `germany` también.
+- **Filtro por región** con contador en vivo y `aria-pressed`.
+- **Ficha de país**: nombre oficial, capital, población (Banco Mundial, último año), superficie, densidad calculada, idiomas y monedas traducidos con `Intl.DisplayNames`, dominio y países limítrofes navegables.
+- **Accesibilidad**: skip link, `aria-current`, `aria-pressed`, `role="status"`, foco visible, contraste y `<table>` con `caption` y `scope`.
+- **Responsive**: en móvil la tabla se convierte en tarjetas.
+- **Modo oscuro** automático.
+- **SEO**: título por ruta con el router de Angular.
 
-## Running end-to-end tests
+## Datos
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+- Países, capitales, regiones, idiomas, monedas, área y límites: [mledoze/countries](https://github.com/mledoze/countries) (ODbL), el mismo origen que usaba restcountries.
+- Población: [Banco Mundial](https://data.worldbank.org/), indicador `SP.POP.TOTL`, último año disponible (2024).
+- Banderas: [flagcdn.com](https://flagcdn.com) (sin key).
 
-## Further help
+El JSON recortado vive en `public/data/paises.json`: **250 países y territorios, 70 KB**.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## Estructura
+
+```
+src/app/
+├── app.ts · app.html · app.css        # shell: cabecera, router-outlet, pie
+├── app.config.ts                      # router con input binding + HttpClient
+├── app.routes.ts                      # 4 rutas con lazy loading
+├── core/
+│   ├── pais.ts                        # modelo, regiones y helpers puros
+│   ├── pais.spec.ts                   # 9 tests de filtrado
+│   └── paises.service.ts              # httpResource + señales
+└── pages/
+    ├── buscar/                        # nombre · capital · región
+    └── detalle/                       # ficha del país
+```
+
+## Correrlo
+
+```bash
+npm install
+npm start        # http://localhost:4200
+npm test         # 11 tests con Vitest
+npm run build
+```
+
+## Deploy
+
+El workflow `.github/workflows/deploy.yml` compila con `--base-href /paisesApp/` y publica en GitHub Pages en cada push a `main`.

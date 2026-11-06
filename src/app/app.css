@@ -1,0 +1,90 @@
+.cabecera {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+
+.cabecera__interior {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 4rem;
+}
+
+.marca {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: var(--ink);
+  font-weight: 800;
+  font-size: 1.12rem;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+}
+
+.marca__icono {
+  width: 1.5rem;
+  height: 1.5rem;
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+}
+
+.nav {
+  display: flex;
+  gap: 0.15rem;
+}
+
+.nav a {
+  padding: 0.45rem 0.75rem;
+  border-radius: 8px;
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.nav a:hover { background: var(--surface-2); color: var(--ink); }
+
+.nav__enlace--activo {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.nav__enlace--activo:hover {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+@media (max-width: 30rem) {
+  .cabecera__interior {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
+    padding-block: 0.7rem;
+  }
+
+  .nav { width: 100%; }
+  .nav a { padding-inline: 0.55rem; }
+}
+
+.pie {
+  border-top: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.pie__interior {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding-block: 1.25rem;
+  font-size: 0.78rem;
+  color: var(--muted);
+}

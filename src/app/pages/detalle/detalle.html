@@ -1,0 +1,100 @@
+@if (cargando()) {
+  <p class="aviso" role="status">Cargando…</p>
+} @else if (pais(); as p) {
+  <a class="volver" routerLink="/">← Volver al buscador</a>
+
+  <header class="detalle">
+    <div class="detalle__bandera">
+      <img
+        [src]="urlBandera(p, 320)"
+        [alt]="'Bandera de ' + p.n"
+        width="320"
+        height="213"
+      />
+    </div>
+
+    <div class="detalle__texto">
+      <p class="kicker">
+        {{ nombreRegion(p.reg) }}
+        @if (p.sub) {
+          · {{ p.sub }}
+        }
+      </p>
+      <h1>{{ p.n }}</h1>
+      @if (p.o !== p.n) {
+        <p class="oficial">{{ p.o }}</p>
+      }
+      <div class="chips">
+        <span class="chip chip--estatico">{{ p.c3 }}</span>
+        <span class="chip chip--estatico">ISO {{ p.c2 }}</span>
+        @if (p.un) {
+          <span class="chip chip--estatico">Miembro de la ONU</span>
+        }
+      </div>
+    </div>
+  </header>
+
+  <dl class="datos">
+    <div>
+      <dt>Capital</dt>
+      <dd>{{ capital() }}</dd>
+    </div>
+    <div>
+      <dt>Población</dt>
+      <dd>
+        {{ p.pop ? formatearNumero(p.pop) : '—' }}
+        @if (p.popYear) {
+          <small>{{ p.popYear }}</small>
+        }
+      </dd>
+    </div>
+    <div>
+      <dt>Superficie</dt>
+      <dd>{{ p.area ? formatearNumero(p.area) + ' km²' : '—' }}</dd>
+    </div>
+    <div>
+      <dt>Densidad</dt>
+      <dd>{{ densidad() ?? '—' }}</dd>
+    </div>
+    <div>
+      <dt>Idiomas</dt>
+      <dd>{{ idiomas() }}</dd>
+    </div>
+    <div>
+      <dt>Moneda</dt>
+      <dd>{{ monedas() }}</dd>
+    </div>
+    <div>
+      <dt>Dominio</dt>
+      <dd>{{ p.tld.length ? p.tld.join(', ') : '—' }}</dd>
+    </div>
+    <div>
+      <dt>Continente</dt>
+      <dd>{{ nombreRegion(p.reg) }}</dd>
+    </div>
+  </dl>
+
+  @if (p.bor.length) {
+    <section class="limites" aria-labelledby="limites-titulo">
+      <h2 id="limites-titulo">Países limítrofes</h2>
+      <div class="chips">
+        @for (b of p.bor; track b) {
+          <a class="chip" [routerLink]="['/pais', b]">{{ nombreLimite(b) }}</a>
+        }
+      </div>
+    </section>
+  }
+
+  <p class="acciones">
+    <a class="boton" [href]="mapa()" target="_blank" rel="noopener">
+      Ver en Google Maps ↗
+    </a>
+  </p>
+} @else {
+  <p class="aviso aviso--error">
+    No encontramos ningún país con el código «{{ id() }}».
+  </p>
+  <p class="acciones">
+    <a class="boton" routerLink="/">Volver al buscador</a>
+  </p>
+}

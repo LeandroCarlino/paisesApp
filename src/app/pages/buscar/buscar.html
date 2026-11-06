@@ -1,0 +1,115 @@
+<section class="pagina">
+  <header class="pagina__head">
+    <p class="kicker">{{ texto().kicker }}</p>
+    <h1>{{ texto().titulo }}</h1>
+    <p class="lede">{{ texto().subtitulo }}</p>
+  </header>
+
+  @if (modo() === 'region') {
+    <div class="chips" role="group" aria-label="Elegí una región">
+      @for (r of regiones; track r.id) {
+        <button
+          type="button"
+          class="chip"
+          [class.chip--activo]="region() === r.id"
+          [attr.aria-pressed]="region() === r.id"
+          (click)="elegirRegion(r.id)"
+        >
+          <span aria-hidden="true">{{ r.emoji }}</span>
+          {{ r.nombre }}
+        </button>
+      }
+    </div>
+  } @else {
+    <form class="buscador" role="search" (submit)="$event.preventDefault()">
+      <label class="sr-only" for="termino">{{ texto().titulo }}</label>
+      <svg class="buscador__icono" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="6.5"></circle>
+        <path d="m16 16 4.5 4.5"></path>
+      </svg>
+      <input
+        id="termino"
+        type="search"
+        [value]="termino()"
+        (input)="termino.set(valorDe($event))"
+        [placeholder]="texto().marcador"
+        autocomplete="off"
+        spellcheck="false"
+      />
+      @if (termino()) {
+        <button
+          type="button"
+          class="buscador__limpiar"
+          (click)="limpiar()"
+          aria-label="Limpiar búsqueda"
+        >
+          ×
+        </button>
+      }
+    </form>
+  }
+
+  @if (cargando()) {
+    <p class="aviso" role="status">Cargando países…</p>
+  } @else if (error()) {
+    <p class="aviso aviso--error" role="alert">
+      No se pudieron cargar los datos. Recargá la página e intentá de nuevo.
+    </p>
+  } @else if (resultados().length) {
+    <p class="conteo" role="status">
+      {{ resultados().length }}
+      {{ resultados().length === 1 ? 'país' : 'países' }}
+    </p>
+
+    <div class="tabla-envoltura">
+      <table class="tabla">
+        <caption class="sr-only">Resultados de la búsqueda</caption>
+        <thead>
+          <tr>
+            <th scope="col">País</th>
+            <th scope="col">Capital</th>
+            <th scope="col">Región</th>
+            <th scope="col" class="num">Población</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (pais of resultados(); track pais.c3) {
+            <tr>
+              <td data-label="País" class="celda-pais">
+                <a class="fila" [routerLink]="['/pais', pais.c3]">
+                  <img
+                    class="bandera"
+                    [src]="urlBandera(pais, 80)"
+                    [alt]="'Bandera de ' + pais.n"
+                    width="40"
+                    height="27"
+                    loading="lazy"
+                  />
+                  <span class="fila__nombre">{{ pais.n }}</span>
+                </a>
+              </td>
+              <td data-label="Capital">{{ capital(pais) }}</td>
+              <td data-label="Región">{{ nombreRegion(pais.reg) }}</td>
+              <td data-label="Población" class="num">
+                {{ pais.pop ? formatearNumero(pais.pop) : '—' }}
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  } @else if (hayConsulta()) {
+    <p class="aviso">
+      No encontramos ningún país{{ modo() === 'capital' ? ' con esa capital' : '' }}.
+      Probá con otra palabra.
+    </p>
+  } @else {
+    <p class="aviso">
+      @if (modo() === 'region') {
+        Elegí una región para ver sus países.
+      } @else {
+        Escribí al menos una letra para empezar a buscar.
+      }
+    </p>
+  }
+</section>

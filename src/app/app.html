@@ -1,0 +1,36 @@
+<a class="salto" href="#contenido">Saltar al contenido</a>
+
+<header class="cabecera">
+  <div class="contenedor cabecera__interior">
+    <a class="marca" routerLink="/" aria-label="Países, ir al inicio">
+      <svg class="marca__icono" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="12" cy="12" r="9"></circle>
+        <path d="M3 12h18M12 3c2.6 2.6 2.6 15.4 0 18M12 3c-2.6 2.6-2.6 15.4 0 18"></path>
+      </svg>
+      <span>Países</span>
+    </a>
+
+    <nav class="nav" aria-label="Principal">
+      <a routerLink="/" routerLinkActive="nav__enlace--activo" [routerLinkActiveOptions]="{ exact: true }">
+        Por país
+      </a>
+      <a routerLink="/por-capital" routerLinkActive="nav__enlace--activo">
+        Por capital
+      </a>
+      <a routerLink="/por-region" routerLinkActive="nav__enlace--activo">
+        Por región
+      </a>
+    </nav>
+  </div>
+</header>
+
+<main id="contenido" class="contenedor principal">
+  <router-outlet />
+</main>
+
+<footer class="pie">
+  <div class="contenedor pie__interior">
+    <span>Datos: mledoze/countries (ODbL) y Banco Mundial.</span>
+    <span>Banderas: flagcdn.com · {{ anio }}</span>
+  </div>
+</footer>
