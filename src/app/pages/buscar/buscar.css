@@ -77,6 +77,11 @@
 
 .buscador__limpiar:hover { background: var(--accent-soft); color: var(--accent); }
 
+/* Separación: las pills no tocan lo que viene después */
+.chips {
+  margin-bottom: 1.5rem;
+}
+
 /* Resultados */
 .conteo {
   margin: 0 0 0.65rem;
